@@ -1,0 +1,152 @@
+/* Importando uma fonte elegante */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Dancing+Script:wght@600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fab8c9;
+    /* Rosa bem clarinho */
+    color: #4e4d4d;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- HEADER --- */
+header {
+    background: #fff;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+nav div {
+    color: #ff4d6d;
+    font-size: 1.5rem;
+}
+
+nav p {
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #555;
+}
+
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+#bcg-card,
+.history,
+#container-convers,
+.card-color,
+#section-primeiro-beijo {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+#section-pry-con #container-convers {
+    background: linear-gradient(135deg, #f07188 40%, #ff002f 100%);
+    color: rgb(59, 56, 56);
+}
+
+#section-history .history {
+    background: linear-gradient(135deg, #f87858 20%, #f50505 100%);
+    color: rgb(59, 56, 56);
+}
+
+#datahistory p {
+    color: #ffffff;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.02);
+}
+
+.dates-desc,
+#pirary-kiss p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: #ff4d6d;
+    margin-bottom: 10px;
+}
+
+#container-time {
+    background: #fff0f3;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    border-left: 5px solid #700217;
+}
+
+#container-time p:first-child {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #c9184a;
+}
+
+#section-primeiro-beijo {
+    background: linear-gradient(135deg, #ff4d6d 0%, #ff758f 100%);
+    color: white;
+}
+
+#section-primeiro-beijo p {
+    color: white;
+    font-size: 1.3rem;
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    section {
+        padding: 20px 10px;
+    }
+
+    .dates-desc {
+        font-size: 1.4rem;
+    }
+}
