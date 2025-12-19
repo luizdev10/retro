@@ -1,127 +1,93 @@
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    } else {
 
-entry.target.classList.remove('show');
-    }
-  });
-});
+document.addEventListener('DOMContentLoaded', () => {
 
-
-const hiddenElements = document.querySelectorAll('.hidden');
-hiddenElements.forEach((el) => observer.observe(el));
-
-
-const carouselSlide = document.querySelector('.carousel-slide');
-const carouselImages = document.querySelectorAll('.carousel-slide img');
-const prevBtn = document.querySelector('#prevBtn');
-const nextBtn = document.querySelector('#nextBtn');
-
-let counter = 0;
-const size = 100; 
-
-function nextSlide() {
-    if (counter >= carouselImages.length - 1) {
-        counter = -1; 
-    }
-    counter++;
-    carouselSlide.style.transition = "transform 0.6s ease-in-out";
-    carouselSlide.style.transform = 'translateX(' + (-size * counter) + '%)';
-}
-
-function prevSlide() {
-    if (counter <= 0) {
-        counter = carouselImages.length;
-    }
-    counter--;
-    carouselSlide.style.transition = "transform 0.6s ease-in-out";
-    carouselSlide.style.transform = 'translateX(' + (-size * counter) + '%)';
-}
-
-
-nextBtn.addEventListener('click', nextSlide);
-prevBtn.addEventListener('click', prevSlide);
-
-
-let autoPlay = setInterval(nextSlide, 2500);
-
-
-const container = document.querySelector('.carousel-container');
-
-container.addEventListener('mouseenter', () => {
-    clearInterval(autoPlay); 
-});
-
-container.addEventListener('mouseleave', () => {
-    autoPlay = setInterval(nextSlide, 3000);
-});
-
-
-let currentAudio = null;
-
-const observerOptions = {
-    threshold: 0.6
-};
-
-const musicObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const audioSrc = entry.target.getAttribute('data-audio');
-            if (audioSrc) {
-                playSectionMusic(audioSrc);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            } else {
+                entry.target.classList.remove('show');
             }
-        }
+        });
     });
-}, observerOptions);
 
-function playSectionMusic(src) {
-
-    if (currentAudio && currentAudio.src.includes(src)) return;
+    const hiddenElements = document.querySelectorAll('.hidden');
+    hiddenElements.forEach((el) => observer.observe(el));
 
 
-    if (currentAudio) {
-        let oldAudio = currentAudio;
-        fadeOutAndStop(oldAudio);
+    const carouselSlide = document.querySelector('.carousel-slide');
+    const carouselImages = document.querySelectorAll('.carousel-slide img');
+    const prevBtn = document.querySelector('#prevBtn');
+    const nextBtn = document.querySelector('#nextBtn');
+    const container = document.querySelector('.carousel-container');
+
+    let counter = 0;
+    const size = 100;
+
+    function nextSlide() {
+        if (!carouselSlide) return; // Segurança caso não exista carrossel
+        if (counter >= carouselImages.length - 1) {
+            counter = -1;
+        }
+        counter++;
+        carouselSlide.style.transition = "transform 0.6s ease-in-out";
+        carouselSlide.style.transform = `translateX(${-size * counter}%)`;
     }
 
-    currentAudio = new Audio(src);
-    currentAudio.volume = 0;
-    currentAudio.play().catch(e => console.log("O navegador bloqueou o autoplay. O usuário precisa interagir com a página primeiro."));
-    
-
-    fadeIn(currentAudio);
-}
-
-
-function fadeIn(audio) {
-    let vol = 0;
-    let interval = setInterval(() => {
-        if (vol < 0.5) {
-            vol += 0.05;
-            audio.volume = vol;
-        } else {
-            clearInterval(interval);
+    function prevSlide() {
+        if (!carouselSlide) return;
+        if (counter <= 0) {
+            counter = carouselImages.length;
         }
-    }, 100);
-}
+        counter--;
+        carouselSlide.style.transition = "transform 0.6s ease-in-out";
+        carouselSlide.style.transform = `translateX(${-size * counter}%)`;
+    }
+
+    // Só adiciona os eventos se os botões existirem no HTML
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+    let autoPlay = setInterval(nextSlide, 3000);
+
+    if (container) {
+        container.addEventListener('mouseenter', () => clearInterval(autoPlay));
+        container.addEventListener('mouseleave', () => {
+            autoPlay = setInterval(nextSlide, 3000);
+        });
+    }
 
 
-function fadeOutAndStop(audio) {
-    let vol = audio.volume;
-    let interval = setInterval(() => {
-        if (vol > 0.05) {
-            vol -= 0.05;
-            audio.volume = vol;
-        } else {
-            audio.pause();
-            clearInterval(interval);
-        }
-    }, 100);
-}
+    const btnIniciar = document.getElementById('btn-iniciar');
+    const overlay = document.getElementById('overlay');
+    const musica = document.getElementById('musica-tema');
+    const musicControl = document.getElementById('music-control');
 
+    if (btnIniciar) {
+        btnIniciar.addEventListener('click', () => {
+            if (overlay) {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 1000);
+            }
 
-document.querySelectorAll('section').forEach(section => {
-    musicObserver.observe(section);
+            if (musica) {
+                musica.play().catch(error => console.log("Erro ao tocar:", error));
+                musica.volume = 0.2;
+            }
+        });
+    }
+
+    if (musicControl && musica) {
+        musicControl.addEventListener('click', () => {
+            if (musica.paused) {
+                musica.play();
+                musicControl.innerText = "🔊";
+            } else {
+                musica.pause();
+                musicControl.innerText = "🔈";
+            }
+        });
+    }
 });
