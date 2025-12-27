@@ -193,8 +193,9 @@ img:hover {
 
 .carousel-container {
     position: relative;
+    width: 100%; 
     max-width: 600px; 
-    margin: auto;
+    margin: 20px auto; 
     overflow: hidden;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
@@ -205,10 +206,10 @@ img:hover {
     transition: transform 0.5s ease-in-out;
 }
 
-.carousel-slide img {
+carousel-slide img {
     width: 100%;
-    border-radius: 0;
-    margin-bottom: 0;
+    height: auto; 
+    display: block; 
     flex-shrink: 0;
 }
 
