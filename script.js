@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const size = 100;
 
     function nextSlide() {
-        if (!carouselSlide) return; // Segurança caso não exista carrossel
+
         if (counter >= carouselImages.length - 1) {
             counter = -1;
         }
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         carouselSlide.style.transform = `translateX(${-size * counter}%)`;
     }
 
-    // Só adiciona os eventos se os botões existirem no HTML
+
     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
 
